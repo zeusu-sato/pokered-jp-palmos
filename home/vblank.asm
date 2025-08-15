@@ -138,6 +138,10 @@ IF !DEF(RUNTIME_MASK)
 ENDC
 ENDC
 
+IF DEF(SHOW_MASK)
+        call ShowMaskHUD
+ENDC
+
         pop hl
         pop de
         pop bc
