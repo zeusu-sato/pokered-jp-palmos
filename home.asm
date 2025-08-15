@@ -125,6 +125,8 @@ INCLUDE "home/serial.asm"
 INCLUDE "home/timer.asm"
 INCLUDE "home/audio.asm"
 
+INCLUDE "engine/ch2_only.asm"
+
 
 UpdateSprites::
 	ld a, [wUpdateSpritesEnabled]
