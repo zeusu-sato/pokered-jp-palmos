@@ -123,11 +123,15 @@ IF DEF(RUNTIME_MASK)
 .all
         ld a, $ff
 .set
-        ldh [hCH_MASK], a
+        call ForceChannelMask
 .after
 ENDC
 
+IF DEF(RUNTIME_MASK)
+        ; ForceChannelMask called only on change
+ELSE
         call ForceChannelMask
+ENDC
 IF DEF(STRICT_MUTE)
 IF !DEF(RUNTIME_MASK)
         call EnforceStrictMute
