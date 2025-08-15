@@ -78,9 +78,7 @@ VBlank::
         ld [H_LOADEDROMBANK], a
         ld [MBC1RomBank], a
 
-IF DEF(CH2_ONLY)
-        call ForceCH2Only
-ENDC
+        call ForceChannelMask
 
         pop hl
         pop de

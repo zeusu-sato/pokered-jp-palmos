@@ -125,7 +125,7 @@ INCLUDE "home/serial.asm"
 INCLUDE "home/timer.asm"
 INCLUDE "home/audio.asm"
 
-INCLUDE "engine/ch2_only.asm"
+INCLUDE "engine/force_channel_mask.asm"
 
 
 UpdateSprites::
