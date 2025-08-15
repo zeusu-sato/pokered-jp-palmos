@@ -1,4 +1,5 @@
-INCLUDE "engine/channel_mask.inc"
+SECTION "MaskHRAM", HRAM[$FFF4]
+hCH_MASK:: ds 1
 
 IF DEF(CH_MIXING)
     ; 互換のため空
@@ -6,7 +7,7 @@ ENDC
 
 SECTION "ChannelMaskRoutine", ROM0
 ForceChannelMask::
-    ld  a, CH_MASK
+    ld  a, [hCH_MASK]
     ldh [rNR51], a
     ret
 

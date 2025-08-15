@@ -78,9 +78,60 @@ VBlank::
         ld [H_LOADEDROMBANK], a
         ld [MBC1RomBank], a
 
+IF DEF(RUNTIME_MASK)
+        ldh a, [hJoyInput]
+        ld b, a
+        and SELECT | D_LEFT
+        cp SELECT | D_LEFT
+        jr z, .ch1
+        ld a, b
+        and SELECT | D_RIGHT
+        cp SELECT | D_RIGHT
+        jr z, .ch2
+        ld a, b
+        and SELECT | D_UP
+        cp SELECT | D_UP
+        jr z, .ch3
+        ld a, b
+        and SELECT | D_DOWN
+        cp SELECT | D_DOWN
+        jr z, .ch4
+        ld a, b
+        and SELECT | START
+        cp SELECT | START
+        jr z, .mute
+        ld a, b
+        and SELECT | A_BUTTON
+        cp SELECT | A_BUTTON
+        jr z, .all
+        jr .after
+.ch1
+        ld a, $11
+        jr .set
+.ch2
+        ld a, $22
+        jr .set
+.ch3
+        ld a, $44
+        jr .set
+.ch4
+        ld a, $88
+        jr .set
+.mute
+        xor a
+        jr .set
+.all
+        ld a, $ff
+.set
+        ldh [hCH_MASK], a
+.after
+ENDC
+
         call ForceChannelMask
 IF DEF(STRICT_MUTE)
+IF !DEF(RUNTIME_MASK)
         call EnforceStrictMute
+ENDC
 ENDC
 
         pop hl
