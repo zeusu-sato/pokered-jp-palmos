@@ -1,6 +1,8 @@
 PYTHON := python
 MD5 := md5sum -c --quiet
 
+RGBASMFLAGS += $(if $(CH2_ONLY),-DCH2_ONLY,)
+
 2bpp     := $(PYTHON) extras/pokemontools/gfx.py 2bpp
 1bpp     := $(PYTHON) extras/pokemontools/gfx.py 1bpp
 pic      := $(PYTHON) extras/pokemontools/pic.py compress
@@ -34,11 +36,11 @@ clean:
 
 %_red.o: dep = $(shell $(includes) $(@D)/$*.asm)
 $(pokered_obj): %_red.o: %.asm $$(dep)
-	rgbasm -D _RED -h -o $@ $*.asm
+	rgbasm $(RGBASMFLAGS) -D _RED -h -o $@ $*.asm
 
 %_blue.o: dep = $(shell $(includes) $(@D)/$*.asm)
 $(pokeblue_obj): %_blue.o: %.asm $$(dep)
-	rgbasm -D _BLUE -h -o $@ $*.asm
+	rgbasm $(RGBASMFLAGS) -D _BLUE -h -o $@ $*.asm
 
 pokered_opt  = -sv -k 01 -l 0x33 -m 0x03 -p 0 -r 03 -t "POKEMON RED"
 pokeblue_opt = -sv -k 01 -l 0x33 -m 0x03 -p 0 -r 03 -t "POKEMON BLUE"

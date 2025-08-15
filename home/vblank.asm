@@ -75,14 +75,18 @@ VBlank::
 	callba TrackPlayTime ; keep track of time played
 
 	ld a, [wVBlankSavedROMBank]
-	ld [H_LOADEDROMBANK], a
-	ld [MBC1RomBank], a
+        ld [H_LOADEDROMBANK], a
+        ld [MBC1RomBank], a
 
-	pop hl
-	pop de
-	pop bc
-	pop af
-	reti
+IF DEF(CH2_ONLY)
+        call ForceCH2Only
+ENDC
+
+        pop hl
+        pop de
+        pop bc
+        pop af
+        reti
 
 
 DelayFrame::
