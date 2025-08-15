@@ -3,6 +3,7 @@ MD5 := md5sum -c --quiet
 
 RGBASMFLAGS += $(if $(CH2_ONLY),-DCH_MASK=0x22,)
 RGBASMFLAGS += $(if $(CH_MASK),-DCH_MASK=$(CH_MASK),)
+RGBASMFLAGS += $(if $(STRICT_MUTE),-DSTRICT_MUTE,)
 
 2bpp     := $(PYTHON) extras/pokemontools/gfx.py 2bpp
 1bpp     := $(PYTHON) extras/pokemontools/gfx.py 1bpp

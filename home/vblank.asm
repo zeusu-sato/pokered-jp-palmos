@@ -79,6 +79,9 @@ VBlank::
         ld [MBC1RomBank], a
 
         call ForceChannelMask
+IF DEF(STRICT_MUTE)
+        call EnforceStrictMute
+ENDC
 
         pop hl
         pop de
