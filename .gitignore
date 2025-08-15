@@ -35,3 +35,7 @@
 .lvimrc
 
 *.sh
+
+# build artifacts
+build/
+*.md5

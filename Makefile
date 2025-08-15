@@ -1,5 +1,5 @@
 PYTHON := python
-MD5 := md5sum -c --quiet
+		MD5 := md5sum -c --quiet
 
 RGBASMFLAGS += $(if $(CH2_ONLY),-DCH_MASK=0x22,)
 RGBASMFLAGS += $(if $(CH_MASK),-DCH_MASK=$(CH_MASK),)
@@ -58,3 +58,26 @@ pokeblue_opt = -sv -k 01 -l 0x33 -m 0x03 -p 0 -r 03 -t "POKEMON BLUE"
 %.2bpp: %.png  ; @$(2bpp) $<
 %.1bpp: %.png  ; @$(1bpp) $<
 %.pic:  %.2bpp ; @$(pic)  $<
+
+# 出力名とツールの既定
+ROM      ?= pokejp.gbc
+OUTDIR   ?= build
+EMU      ?= sameboy
+GB2PDB   ?= gb2pdb.py   # 任意の .gb→.pdb 変換スクリプト/ツールのパス
+PDB_TITLE?= PokeJP CHmask
+
+$(OUTDIR):
+	mkdir -p $(OUTDIR)
+
+md5: $(ROM) | $(OUTDIR)
+	md5sum $(ROM) | tee $(OUTDIR)/$(ROM).md5
+
+run: $(ROM)
+	@command -v $(EMU) >/dev/null 2>&1 || { echo "エミュ $(EMU) が見つかりません"; exit 1; }
+	$(EMU) $(ROM)
+
+# .gb/.gbc → .pdb 変換（Liberty用）
+pdb: $(ROM) | $(OUTDIR)
+	@command -v python3 >/dev/null 2>&1 || { echo "python3 が必要です"; exit 1; }
+	@test -f $(GB2PDB) || { echo "$(GB2PDB) が見つかりません（環境変数で上書き可）"; exit 1; }
+	python3 $(GB2PDB) --in $(ROM) --out $(OUTDIR)/$(ROM:.gbc=.pdb) --title "$(PDB_TITLE)"
