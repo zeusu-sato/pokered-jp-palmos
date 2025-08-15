@@ -1,0 +1,40 @@
+name: build-roms
+on:
+  push:
+  pull_request:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+          - { name: "ch2",     CH_MASK: "0x22", STRICT_MUTE: "0", RUNTIME_MASK: "0", SOFT_PAN: "0", SHOW_MASK: "0" }
+          - { name: "ch2_str", CH_MASK: "0x22", STRICT_MUTE: "1", RUNTIME_MASK: "0", SOFT_PAN: "0", SHOW_MASK: "0" }
+          - { name: "all",     CH_MASK: "0xFF", STRICT_MUTE: "0", RUNTIME_MASK: "0", SOFT_PAN: "0", SHOW_MASK: "0" }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y rgbds python3 make
+      - name: Build
+        run: |
+          make clean
+          make CH_MASK=${{ matrix.cfg.CH_MASK }} STRICT_MUTE=${{ matrix.cfg.STRICT_MUTE }} \
+               RUNTIME_MASK=${{ matrix.cfg.RUNTIME_MASK }} SOFT_PAN=${{ matrix.cfg.SOFT_PAN }} \
+               SHOW_MASK=${{ matrix.cfg.SHOW_MASK }}
+      - name: MD5
+        run: make md5
+      - name: PDB
+        run: make pdb GB2PDB=tools/gb2pdb.py PDB_TITLE="PokeJP ${{ matrix.cfg.name }}"
+      - name: Collect artifacts
+        run: |
+          mkdir -p dist
+          cp -v *.gb* dist/ || true
+          cp -v build/*.pdb dist/ || true
+          cp -v build/*.md5 dist/ || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pokejp-${{ matrix.cfg.name }}
+          path: dist
