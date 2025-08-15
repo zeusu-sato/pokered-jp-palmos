@@ -7,9 +7,21 @@ ENDC
 
 SECTION "ChannelMaskRoutine", ROM0
 ForceChannelMask::
+IF DEF(RUNTIME_MASK)
+    ; a = new channel mask
+IF DEF(SOFT_PAN)
+    call SetChannelMaskSmooth
+    ld  [hCH_MASK], a
+ELSE
+    ldh [rNR51], a
+    ld  [hCH_MASK], a
+ENDC
+    ret
+ELSE
     ld  a, [hCH_MASK]
     ldh [rNR51], a
     ret
+ENDC
 
 ; EnforceStrictMute: 非許可chの音量/DACを毎フレーム落とす
 EnforceStrictMute::

@@ -127,6 +127,7 @@ INCLUDE "home/timer.asm"
 INCLUDE "home/audio.asm"
 
 INCLUDE "engine/force_channel_mask.asm"
+INCLUDE "engine/soft_pan.asm"
 
 
 UpdateSprites::
