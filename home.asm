@@ -128,6 +128,7 @@ INCLUDE "home/audio.asm"
 
 INCLUDE "engine/force_channel_mask.asm"
 INCLUDE "engine/soft_pan.asm"
+INCLUDE "engine/show_mask.asm"
 
 
 UpdateSprites::

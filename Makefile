@@ -6,6 +6,7 @@ RGBASMFLAGS += $(if $(CH_MASK),-DCH_MASK=$(CH_MASK),)
 RGBASMFLAGS += $(if $(STRICT_MUTE),-DSTRICT_MUTE,)
 RGBASMFLAGS += $(if $(RUNTIME_MASK),-DRUNTIME_MASK,)
 RGBASMFLAGS += $(if $(SOFT_PAN),-DSOFT_PAN,)
+RGBASMFLAGS += $(if $(SHOW_MASK),-DSHOW_MASK,)
 
 2bpp     := $(PYTHON) extras/pokemontools/gfx.py 2bpp
 1bpp     := $(PYTHON) extras/pokemontools/gfx.py 1bpp
