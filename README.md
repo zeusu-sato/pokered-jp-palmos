@@ -28,6 +28,43 @@ make CH_MASK=0x20    # CH2 left only
 ```
 
 
+## Features
+
+- Force the NR51 channel mask at build time
+- Optional strict mute, soft panning, and runtime channel masking
+- Optional on-screen NR51 mask display
+
+## Build
+
+```
+make CH_MASK=0x22 STRICT_MUTE=1 SOFT_PAN=1
+make md5
+make pdb GB2PDB=tools/gb2pdb.py PDB_TITLE="PokeJP CH2"
+```
+
+## Runtime Controls
+
+When built with `RUNTIME_MASK=1`:
+
+- SELECT+LEFT = CH1, RIGHT = CH2, UP = CH3, DOWN = CH4
+- SELECT+START = All Mute, SELECT+A = All On
+- `SHOW_MASK=1` displays the NR51 mask (hex) in the upper-left corner
+
+## Make targets
+
+- `make`
+- `make clean`
+- `make md5`
+- `make pdb`
+- `make run`
+- `make zip`
+
+## CI & Releases
+
+[![Build](https://github.com/OWNER/REPO/actions/workflows/build.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/build.yml)
+
+Tags matching `v*` trigger an automatic GitHub Release.
+
 ## See also
 
 * Disassembly of [**Pokémon Crystal**][pokecrystal]
