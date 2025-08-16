@@ -16,6 +16,13 @@ PICS_5 EQU $D
 
 INCLUDE "home.asm"
 
+IF DEF(CH_MASK) || DEF(STRICT_MUTE) || DEF(RUNTIME_MASK) || DEF(SOFT_PAN) || DEF(SHOW_MASK)
+    INCLUDE "engine/channel_mask.inc"
+    INCLUDE "engine/soft_pan.asm"
+    INCLUDE "engine/show_mask.asm"
+    INCLUDE "engine/ch2_only.asm" ; 既存の ForceChannelMask/EnforceStrictMute 定義ファイル
+ENDC
+
 
 SECTION "bank1",ROMX,BANK[$1]
 

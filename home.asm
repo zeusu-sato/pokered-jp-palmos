@@ -118,17 +118,12 @@ INCLUDE "data/collision.asm"
 INCLUDE "home/copy2.asm"
 INCLUDE "home/text.asm"
 INCLUDE "home/vcopy.asm"
-INCLUDE "engine/channel_mask.inc"
 INCLUDE "home/init.asm"
 INCLUDE "home/vblank.asm"
 INCLUDE "home/fade.asm"
 INCLUDE "home/serial.asm"
 INCLUDE "home/timer.asm"
 INCLUDE "home/audio.asm"
-
-INCLUDE "engine/force_channel_mask.asm"
-INCLUDE "engine/soft_pan.asm"
-INCLUDE "engine/show_mask.asm"
 
 
 UpdateSprites::
