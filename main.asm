@@ -1,8 +1,8 @@
 INCLUDE "constants.asm"
 
 INCLUDE "compat/compat_macros.asm"
-IMPORT SFX_Shooting_Star
-IMPORT Music_PalletTown
+; IMPORT SFX_Shooting_Star
+; IMPORT Music_PalletTown
 
 NPC_SPRITES_1 EQU $4
 NPC_SPRITES_2 EQU $5
