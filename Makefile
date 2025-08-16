@@ -48,10 +48,11 @@ pokeblue_opt = -sv -k 01 -l 0x33 -m 0x03 -p 0 -r 03 -t "POKEMON BLUE"
 	rgblink -n $*.sym -o $@ $^
 		rgbfix $($*_opt) $@
 
-%.png:  ;
-	%.2bpp: %.png  ; @$(2bpp) $<
-%.1bpp: %.png  ; @$(1bpp) $<
-%.pic:  %.2bpp ; @$(pic)  $<
+%.png: ;
+
+%.2bpp: %.png ; @$(2bpp) $<
+%.1bpp: %.png ; @$(1bpp) $<
+%.pic: %.2bpp ; @$(pic) $<
 
 # 出力名とツールの既定
 ROM      ?= pokejp.gbc
