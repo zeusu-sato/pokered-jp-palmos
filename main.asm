@@ -1,7 +1,7 @@
 INCLUDE "constants.asm"
 
-IMPORT SFX_Shooting_Star
-IMPORT Music_PalletTown
+; IMPORT SFX_Shooting_Star
+; IMPORT Music_PalletTown
 
 NPC_SPRITES_1 EQU $4
 NPC_SPRITES_2 EQU $5
@@ -15,13 +15,6 @@ PICS_4 EQU $C
 PICS_5 EQU $D
 
 INCLUDE "home.asm"
-
-IF DEF(CH_MASK) || DEF(STRICT_MUTE) || DEF(RUNTIME_MASK) || DEF(SOFT_PAN) || DEF(SHOW_MASK)
-    INCLUDE "engine/channel_mask.inc"
-    INCLUDE "engine/soft_pan.asm"
-    INCLUDE "engine/show_mask.asm"
-    INCLUDE "engine/ch2_only.asm" ; 既存の ForceChannelMask/EnforceStrictMute 定義ファイル
-ENDC
 
 
 SECTION "bank1",ROMX,BANK[$1]
