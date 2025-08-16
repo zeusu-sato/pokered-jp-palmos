@@ -1,4 +1,4 @@
-PYTHON := python
+				PYTHON := python
 		MD5 := md5sum -c --quiet
 
 RGBASMFLAGS += $(if $(CH2_ONLY),-DCH_MASK=0x22,)
@@ -59,12 +59,14 @@ OUTDIR   ?= build
 EMU      ?= sameboy
 GB2PDB   ?= gb2pdb.py   # 任意の .gb→.pdb 変換スクリプト/ツールのパス
 PDB_TITLE?= PokeJP CHmask
+ZIPNAME  ?= pokejp_chmask.zip
 
 $(OUTDIR):
 	mkdir -p $(OUTDIR)
 
 md5: $(ROM) | $(OUTDIR)
 	md5sum $(ROM) | tee $(OUTDIR)/$(ROM).md5
+	cp $(OUTDIR)/$(ROM).md5 $(OUTDIR)/.md5
 
 run: $(ROM)
 	@command -v $(EMU) >/dev/null 2>&1 || { echo "エミュ $(EMU) が見つかりません"; exit 1; }
@@ -75,6 +77,13 @@ pdb: $(ROM) | $(OUTDIR)
 	@command -v python3 >/dev/null 2>&1 || { echo "python3 が必要です"; exit 1; }
 	@test -f $(GB2PDB) || { echo "$(GB2PDB) が見つかりません（環境変数で上書き可）"; exit 1; }
 	python3 $(GB2PDB) --in $(ROM) --out $(OUTDIR)/$(ROM:.gbc=.pdb) --title "$(PDB_TITLE)"
+	cp $(OUTDIR)/$(ROM:.gbc=.pdb) $(OUTDIR)/.pdb
+
+zip: pdb md5 | $(OUTDIR)
+	@which zip >/dev/null || { echo "zip コマンドが必要です"; exit 1; }
+	rm -f $(OUTDIR)/$(ZIPNAME)
+	zip -j $(OUTDIR)/$(ZIPNAME) $(ROM) build/.pdb build/.md5 README.md
+	@echo "=> $(OUTDIR)/$(ZIPNAME)"
 
 RED_OBJS := audio_red.o main_red.o wram_red.o
 
